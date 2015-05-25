@@ -16,16 +16,6 @@ namespace ScripTerasu.ManageAzureAD
         {
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
-            
-            LoginView LoginView = new LoginView();
-            if ((bool)LoginView.ShowDialog())
-            {
-
-            }
-            else
-            {
-
-            }
         }
     }
 }

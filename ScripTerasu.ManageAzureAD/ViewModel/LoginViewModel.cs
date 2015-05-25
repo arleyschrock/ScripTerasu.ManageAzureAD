@@ -9,6 +9,7 @@ using System.Management.Automation.Runspaces;
 using System.Security;
 using System.Windows;
 using System.Collections.ObjectModel;
+using ScripTerasu.ManageAzureAD.Helpers;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
 {

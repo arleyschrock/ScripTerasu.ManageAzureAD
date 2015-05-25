@@ -6,10 +6,9 @@
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
         Height="300"
-        Width="300"
-        Title="MVVM Light Application"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
-
+        Width="500"
+        Title="MVVM Light Application" >
+    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,8 +16,18 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    
+    <Window.DataContext>
+        <Binding Path="Main"
+                 Source="{StaticResource Locator}" />
+    </Window.DataContext>
 
     <Grid x:Name="LayoutRoot">
-        <ListBox HorizontalAlignment="Left" Height="249" Margin="10,10,0,0" VerticalAlignment="Top" Width="272"/>
+        <TabControl d:IsHidden="True">
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
     </Grid>
 </Window>

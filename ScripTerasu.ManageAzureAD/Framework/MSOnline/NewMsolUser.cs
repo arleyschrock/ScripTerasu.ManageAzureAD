@@ -1,5 +1,4 @@
-﻿using Microsoft.Online.Administration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ScripTerasu.ManageAzureAD.Framework.MSOnline

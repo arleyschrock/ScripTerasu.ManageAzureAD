@@ -1,14 +1,7 @@
-﻿using ScripTerasu.ManageAzureAD.Framework.MSOnline;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using ScripTerasu.ManageAzureAD.Helpers;
 using System.Management.Automation.Runspaces;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ScripTerasu.ManageAzureAD.Framework
+namespace ScripTerasu.ManageAzureAD.Framework.MSOnline
 {
     public static class MsolCmdletExtensions
     {
@@ -17,12 +10,12 @@ namespace ScripTerasu.ManageAzureAD.Framework
             if (source == null)
                 return (Command)null;
 
-            string srtCommandText = source.CommandText;
+            var srtCommandText = source.CommandText;
             Command command = new Command(srtCommandText);
             foreach (var prop in source.GetType().GetProperties())
             {
                 var value = prop.GetValue(source);
-                if (value != null && value != srtCommandText)
+                if (value != null && value.ToString() != srtCommandText)
                 {
                     var defaultObject = TypeExtension.GetNewObject(prop.PropertyType);
                     if (!value.Equals(defaultObject))

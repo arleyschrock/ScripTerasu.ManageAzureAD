@@ -25,24 +25,7 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
-        static ViewModelLocator()
-        {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
-            }
-            else
-            {
-                SimpleIoc.Default.Register<IDataService, DataService>();
-            }
-
-            SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<LoginViewModel>();
-        }
-        
-        #region Property
+        #region Properties
 
         /// <summary>
         /// Gets the Main property.
@@ -72,8 +55,39 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets the ManageMsolUser property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ManageMsolUserModel ManageMsolUser
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ManageMsolUserModel>();
+            }
+        }
         #endregion
 
+        static ViewModelLocator()
+        {
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+            }
+            else
+            {
+                SimpleIoc.Default.Register<IDataService, DataService>();
+            }
+
+            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<ManageMsolUserModel>();
+        }
+        
         /// <summary>
         /// Cleans up all the resources.
         /// </summary>

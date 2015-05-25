@@ -5,6 +5,42 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScripTerasu.ManageAzureAD", "ScripTerasu.ManageAzureAD\ScripTerasu.ManageAzureAD.csproj", "{D26B2AF2-23DA-4A7E-AC0C-8621FAD92AC3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", "{6BA264CD-446A-43CE-9308-A9D3C74F04A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSOnline", "MSOnline", "{E0C0964B-D21D-4C6A-95C3-52B38D5AD15A}"
+	ProjectSection(SolutionItems) = preProject
+		References\MSOnline\Microsoft.Azure.ActiveDirectory.Client.Framework.dll = References\MSOnline\Microsoft.Azure.ActiveDirectory.Client.Framework.dll
+		References\MSOnline\Microsoft.Online.Administration.Automation.PSModule.dll = References\MSOnline\Microsoft.Online.Administration.Automation.PSModule.dll
+		References\MSOnline\Microsoft.Online.Administration.Automation.PSModule.dll-help.xml = References\MSOnline\Microsoft.Online.Administration.Automation.PSModule.dll-help.xml
+		References\MSOnline\Microsoft.Online.Administration.Automation.PSModule.Resources.dll = References\MSOnline\Microsoft.Online.Administration.Automation.PSModule.Resources.dll
+		References\MSOnline\Microsoft.Online.Identity.Federation.PowerShell.dll = References\MSOnline\Microsoft.Online.Identity.Federation.PowerShell.dll
+		References\MSOnline\Microsoft.Online.Identity.Federation.PowerShell.dll-help.xml = References\MSOnline\Microsoft.Online.Identity.Federation.PowerShell.dll-help.xml
+		References\MSOnline\Microsoft.Online.Identity.Federation.PowerShell.Strings.dll = References\MSOnline\Microsoft.Online.Identity.Federation.PowerShell.Strings.dll
+		References\MSOnline\MSOnline.Format.ps1xml = References\MSOnline\MSOnline.Format.ps1xml
+		References\MSOnline\MSOnline.psd1 = References\MSOnline\MSOnline.psd1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSOnlineExtended", "MSOnlineExtended", "{117891E1-781D-42B7-9BD3-8B6B0F003CCB}"
+	ProjectSection(SolutionItems) = preProject
+		References\MSOnlineExtended\Microsoft.Azure.ActiveDirectory.Client.Framework.dll = References\MSOnlineExtended\Microsoft.Azure.ActiveDirectory.Client.Framework.dll
+		References\MSOnlineExtended\Microsoft.Online.Administration.Automation.PSModule.dll = References\MSOnlineExtended\Microsoft.Online.Administration.Automation.PSModule.dll
+		References\MSOnlineExtended\Microsoft.Online.Administration.Automation.PSModule.dll-help.xml = References\MSOnlineExtended\Microsoft.Online.Administration.Automation.PSModule.dll-help.xml
+		References\MSOnlineExtended\Microsoft.Online.Administration.Automation.PSModule.Resources.resources.dll = References\MSOnlineExtended\Microsoft.Online.Administration.Automation.PSModule.Resources.resources.dll
+		References\MSOnlineExtended\MSOnline.Format.ps1xml = References\MSOnlineExtended\MSOnline.Format.ps1xml
+		References\MSOnlineExtended\MSOnlineExtended.psd1 = References\MSOnlineExtended\MSOnlineExtended.psd1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "es-es", "es-es", "{A0DF3A76-545C-48D9-9FDF-ECD381F4A919}"
+	ProjectSection(SolutionItems) = preProject
+		References\MSOnline\es-es\Microsoft.Online.Administration.Automation.PSModule.Resources.resources.dll = References\MSOnline\es-es\Microsoft.Online.Administration.Automation.PSModule.Resources.resources.dll
+		References\MSOnline\es-es\Microsoft.Online.Identity.Federation.PowerShell.Strings.resources.dll = References\MSOnline\es-es\Microsoft.Online.Identity.Federation.PowerShell.Strings.resources.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "es-es", "es-es", "{17DF1519-A96F-42B0-B878-4DA8BB154B00}"
+	ProjectSection(SolutionItems) = preProject
+		References\MSOnlineExtended\es-es\Microsoft.Online.Administration.Automation.PSModule.Resources.dll = References\MSOnlineExtended\es-es\Microsoft.Online.Administration.Automation.PSModule.Resources.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +54,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0C0964B-D21D-4C6A-95C3-52B38D5AD15A} = {6BA264CD-446A-43CE-9308-A9D3C74F04A8}
+		{117891E1-781D-42B7-9BD3-8B6B0F003CCB} = {6BA264CD-446A-43CE-9308-A9D3C74F04A8}
+		{A0DF3A76-545C-48D9-9FDF-ECD381F4A919} = {E0C0964B-D21D-4C6A-95C3-52B38D5AD15A}
+		{17DF1519-A96F-42B0-B878-4DA8BB154B00} = {117891E1-781D-42B7-9BD3-8B6B0F003CCB}
 	EndGlobalSection
 EndGlobal

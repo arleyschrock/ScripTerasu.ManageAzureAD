@@ -5,18 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ff="clr-namespace:FunctionalFun.UI"
         xmlns:ignore="http://www.ignore.com"
-        mc:Ignorable="d ignore"  Height="300" Width="500"
-        DataContext="{Binding Login, Source={StaticResource Locator}}">
+        mc:Ignorable="d ignore"  Height="300" Width="450"
+        DataContext="{Binding Login, Source={StaticResource Locator}}" 
+        WindowStartupLocation="CenterScreen" 
+        MinWidth="450" MinHeight="300" MaxWidth="450" MaxHeight="300" 
+        ResizeMode="NoResize">
 
     <Grid>
         <StackPanel Margin="10" Orientation="Vertical">
-            <Label Content="Inicie sesión" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Top" Width="350" BorderThickness="1" Margin="10" FontFamily="Segoe UI Black"/>
-            <TextBox Text="{Binding UserPrincipalName}" HorizontalAlignment="Center" Height="28" TextWrapping="Wrap" Width="350" Margin="5" FontSize="14" />
+            <Label Content="Inicie sesión" HorizontalAlignment="Stretch" FontSize="14" VerticalAlignment="Stretch" BorderThickness="1" Margin="10" FontFamily="Segoe UI Black"/>
+            <TextBox Text="{Binding UserPrincipalName}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="28" TextWrapping="Wrap" Margin="5" FontSize="14" />
             <PasswordBox ff:PasswordBoxAssistant.BindPassword="true"  ff:PasswordBoxAssistant.BoundPassword="{Binding Path=UserPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
-                         HorizontalAlignment="Center" Margin="5" VerticalAlignment="Stretch" Width="350" Height="28" FontSize="14"/>
-            <Grid Height="60" Margin="50" Width="350">
-                <Button Command="{Binding LoginCommand}" Content="Iniciar sesión" Margin="10,10,190,10" Width="150"/>
-                <Button Command="{Binding CancelCommand}" Content="Cancelar" Margin="190,10,10,10" Width="150"/>
+                         HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Height="28" FontSize="14"/>
+            <CheckBox  Content="Recordar credenciales" HorizontalAlignment="Stretch" Margin="5" FontSize="14" VerticalAlignment="Stretch" />
+            <Grid HorizontalAlignment="Stretch" Margin="30" VerticalAlignment="Stretch">
+                <Button Command="{Binding LoginCommand}" Content="Iniciar sesión" HorizontalAlignment="Left" Margin="10" Height="30" VerticalAlignment="Stretch" Width="150" Grid.Column="0"/>
+                <Button Command="{Binding CancelCommand}" Content="Cancelar" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="10" Height="30" Width="150" Grid.Column="1"/>
             </Grid>
         </StackPanel>
     </Grid>

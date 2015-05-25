@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using ScripTerasu.ManageAzureAD.Model;
-using System.Data;
+using ScripTerasu.ManageAzureAD.View;
+using System.Collections.ObjectModel;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
 {
@@ -12,39 +13,7 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        /// <summary>
-        /// The <see cref="Grid" /> property's name.
-        /// </summary>
-        public const string GridPropertyName = "Grid";
-
-        private DataTable _grid;
-
-        /// <summary>
-        /// Sets and gets the Grid property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public DataTable  Grid
-        {
-            get
-            {
-                return _grid;
-            }
-
-            set
-            {
-                if (_grid == value)
-                {
-                    return;
-                }
-
-                _grid = value;
-                RaisePropertyChanged(GridPropertyName);
-            }
-        }
-
-
-        private readonly IDataService _dataService;
-
+        #region Properties
         /// <summary>
         /// The <see cref="WelcomeTitle" /> property's name.
         /// </summary>
@@ -75,6 +44,45 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
             }
         }
 
+
+        /// <summary>
+        /// The <see cref="ItemsTabs" /> property's name.
+        /// </summary>
+        public const string ItemsTabsPropertyName = "ItemsTabs";
+
+        private ObservableCollection<ItemViewModel>  _ItemsTabs = new ObservableCollection<ItemViewModel>();
+
+        /// <summary>
+        /// Sets and gets the ItemsTabs property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ObservableCollection<ItemViewModel>  ItemsTabs
+        {
+            get
+            {
+                return _ItemsTabs;
+            }
+
+            //set
+            //{
+            //    if (_ItemsTabs == value)
+            //    {
+            //        return;
+            //    }
+
+            //    _ItemsTabs = value;
+            //    RaisePropertyChanged(ItemsTabsPropertyName);
+            //}
+        }
+        #endregion
+
+        #region Fields
+        private readonly IDataService _dataService;
+
+        #endregion
+
+        #region Constructor
+        
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -92,7 +100,27 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
 
                     WelcomeTitle = item.Title;
                 });
+            
+            LoginView loginView = new LoginView();
+            if ((bool)loginView.ShowDialog())
+            {
+
+            }
+            else
+            {
+
+            }
+            Initialize();
+            
         }
+
+        private void Initialize()
+        {
+            ItemsTabs.Add(new ItemViewModel("Tab 1"));
+            ItemsTabs.Add(new ItemViewModel("Tab 2"));
+        }
+
+        #endregion
 
         ////public override void Cleanup()
         ////{

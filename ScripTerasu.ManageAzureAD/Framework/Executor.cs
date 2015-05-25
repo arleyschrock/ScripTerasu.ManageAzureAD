@@ -1,5 +1,4 @@
-﻿using Microsoft.Online.Administration.Automation;
-using ScripTerasu.ManageAzureAD.Framework.MSOnline;
+﻿using ScripTerasu.ManageAzureAD.Framework.MSOnline;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

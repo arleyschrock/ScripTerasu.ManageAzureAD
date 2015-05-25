@@ -1,6 +1,6 @@
 ﻿using System.Security;
 
-namespace ScripTerasu.ManageAzureAD.Framework
+namespace ScripTerasu.ManageAzureAD.Helpers
 {
     public static class StringExtensions
     {
