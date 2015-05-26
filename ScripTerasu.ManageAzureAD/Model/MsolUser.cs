@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScripTerasu.ManageAzureAD.Model
 {
-    public class User
+    public class MsolUser
     {
         public string MyProperty { get; set; }
     }

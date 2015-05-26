@@ -1,6 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
-using ScripTerasu.ManageAzureAD.Model;
+using Microsoft.Online.Administration;
+using ScripTerasu.ManageAzureAD.Framework;
+using ScripTerasu.ManageAzureAD.Framework.MSOnline;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Management.Automation;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
 {
@@ -10,8 +14,9 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ManageMsolUserModel : ViewModelBase
+    public class ManageUsersViewModel : ViewModelBase
     {
+        #region Properties
 
         /// <summary>
         /// The <see cref="ListMSolUser" /> property's name.
@@ -43,12 +48,23 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
             }
         }
 
+        #endregion
+
+
         /// <summary>
         /// Initializes a new instance of the ManageMsolUserModel class.
         /// </summary>
-        public ManageMsolUserModel()
+        public ManageUsersViewModel()
         {
-            ListMSolUser.Add(new User() { MyProperty = "AsDf" });
+            List<IMsolCmdlet> collCmdlets = new List<IMsolCmdlet>();
+            collCmdlets.Add(new GetMsolUser() { All = true });
+
+            Collection<PSObject> coll = Executor.Instance.ExcutePowershellCommandsMSOnline(collCmdlets);
+
+            foreach (PSObject item in coll)
+            {
+                ListMSolUser.Add((User)item.BaseObject);
+            }
         }
     }
 }

@@ -12,6 +12,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using ScripTerasu.ManageAzureAD.Helpers;
 using ScripTerasu.ManageAzureAD.Model;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
@@ -61,11 +62,11 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public ManageMsolUserModel ManageMsolUser
+        public ManageUsersViewModel ManageUser
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ManageMsolUserModel>();
+                return ServiceLocator.Current.GetInstance<ManageUsersViewModel>();
             }
         }
         #endregion
@@ -85,14 +86,30 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
-            SimpleIoc.Default.Register<ManageMsolUserModel>();
+            SimpleIoc.Default.Register<ManageUsersViewModel>();
         }
-        
+
+        //No Code Behind
+        //TODO: this could handle different window types based on message.Type, just ike MainWindow.xaml.cs does
+        public static void CreateLoginWindow(OpenWindowMessage message)
+        {
+            var uniqueKey = System.Guid.NewGuid().ToString();
+            var loginModalWindowVM = SimpleIoc.Default.GetInstance<LoginViewModel>(uniqueKey);
+            loginModalWindowVM.Argument = message.Argument;
+            var loginModalWindow = new LoginView()
+            {
+                DataContext = loginModalWindowVM
+            };
+            loginModalWindow.Closed += (sender, args) => SimpleIoc.Default.Unregister(uniqueKey);
+            loginModalWindow.Show();
+        }
+
         /// <summary>
         /// Cleans up all the resources.
         /// </summary>
         public static void Cleanup()
         {
         }
+
     }
 }

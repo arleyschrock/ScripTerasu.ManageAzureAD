@@ -60,6 +60,12 @@
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight, Version=5.1.1.35049, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -73,6 +79,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLightLibs.5.1.1.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Online.Administration.Automation.PSModule">
+      <HintPath>..\References\MSOnline\Microsoft.Online.Administration.Automation.PSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Online.Administration.Automation.PSModule.Resources">
+      <HintPath>..\References\MSOnline\Microsoft.Online.Administration.Automation.PSModule.Resources.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -82,6 +94,7 @@
       <Private>True</Private>
       <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Controls.Input.Toolkit">
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
@@ -117,9 +130,11 @@
     <Compile Include="Framework\MSOnline\RemoveMsolUser.cs" />
     <Compile Include="Framework\MSOnline\RestoreMsolUser.cs" />
     <Compile Include="Framework\MSOnline\SetMsolUser.cs" />
+    <Compile Include="Helpers\OpenWindowMessage.cs" />
     <Compile Include="Helpers\TypeExtension.cs" />
     <Compile Include="Helpers\PasswordBoxAssistant.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\WindowType.cs" />
     <Compile Include="Model\DataItem.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
@@ -130,17 +145,18 @@
     <Compile Include="Framework\MSOnline\GetMsolAccountSku.cs" />
     <Compile Include="Framework\MSOnline\GetMsolUser.cs" />
     <Compile Include="Framework\MSOnline\UserCredential.cs" />
-    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\MsolUser.cs" />
+    <Compile Include="ViewModel\ICloseable.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ManageMsolUserModel.cs" />
+    <Compile Include="ViewModel\ManageUsersViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\LoginView.xaml.cs">
+    <Compile Include="LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ManageMsolUserView.xaml.cs">
-      <DependentUpon>ManageMsolUserView.xaml</DependentUpon>
+    <Compile Include="ManageUsersView.xaml.cs">
+      <DependentUpon>ManageUsersView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -158,12 +174,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\LoginView.xaml">
+    <Page Include="LoginView.xaml">
       <SubType>Form</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ManageMsolUserView.xaml">
-      <SubType>Form</SubType>
+    <Page Include="ManageUsersView.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -209,6 +225,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\ajax-loader.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

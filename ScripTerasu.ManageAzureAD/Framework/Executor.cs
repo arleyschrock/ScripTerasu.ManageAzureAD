@@ -71,5 +71,26 @@ namespace ScripTerasu.ManageAzureAD.Framework
             }
         }
 
+        public Collection<PSObject> ExcutePowershellCommandsMSOnline(List<IMsolCmdlet> collCmdlets)
+        {
+            try
+            {
+                // Create Initial Session State for runspace.
+                InitialSessionState initialSession = InitialSessionState.CreateDefault();
+                initialSession.ImportPSModule(new[] { "MSOnline" });
+
+                // Create credential object.
+                PSCredential credential = new PSCredential(UserCredential.UserName, UserCredential.Password);
+
+                collCmdlets.Insert(0, new ConnectMsolService() { Credential = credential });
+
+                return this.ExcutePowershellCommands(initialSession, collCmdlets);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

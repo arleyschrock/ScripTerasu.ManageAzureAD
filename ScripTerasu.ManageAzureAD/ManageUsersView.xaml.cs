@@ -1,19 +1,21 @@
-﻿using System.Windows;
+﻿using ScripTerasu.ManageAzureAD.ViewModel;
+using System.Windows;
 using System.Windows.Controls;
 
-namespace ScripTerasu.ManageAzureAD.View
+namespace ScripTerasu.ManageAzureAD
 {
     /// <summary>
     /// Description for ManageMsolUserView.
     /// </summary>
-    public partial class ManageMsolUserView : Window
+    public partial class ManageUsersView : Window
     {
         /// <summary>
         /// Initializes a new instance of the ManageMsolUserView class.
         /// </summary>
-        public ManageMsolUserView()
+        public ManageUsersView()
         {
             InitializeComponent();
+            Closing += (s, e) => ViewModelLocator.Cleanup();
         }
     }
 }

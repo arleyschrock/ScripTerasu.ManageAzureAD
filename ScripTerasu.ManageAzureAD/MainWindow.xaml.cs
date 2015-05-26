@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using ScripTerasu.ManageAzureAD.ViewModel;
-using ScripTerasu.ManageAzureAD.View;
 
 namespace ScripTerasu.ManageAzureAD
 {

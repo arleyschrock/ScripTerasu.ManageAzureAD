@@ -1,7 +1,7 @@
 ﻿using ScripTerasu.ManageAzureAD.ViewModel;
 using System.Windows;
 
-namespace ScripTerasu.ManageAzureAD.View
+namespace ScripTerasu.ManageAzureAD
 {
     /// <summary>
     /// Description for LoginView.
@@ -14,6 +14,7 @@ namespace ScripTerasu.ManageAzureAD.View
         public LoginView()
         {
             InitializeComponent();
+            //Closing += (s, e) => ViewModelLocator.Cleanup();
         }
     }
 }

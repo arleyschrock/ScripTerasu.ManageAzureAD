@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using ScripTerasu.ManageAzureAD.Helpers;
 using ScripTerasu.ManageAzureAD.Model;
-using ScripTerasu.ManageAzureAD.View;
 using System.Collections.ObjectModel;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
@@ -74,6 +75,68 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
             //    RaisePropertyChanged(ItemsTabsPropertyName);
             //}
         }
+
+
+        /// <summary>
+        /// The <see cref="Result" /> property's name.
+        /// </summary>
+        public const string ResultPropertyName = "Result";
+
+        private string _resultProperty;
+
+        /// <summary>
+        /// Sets and gets the Result property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string Result
+        {
+            get
+            {
+                return _resultProperty;
+            }
+
+            set
+            {
+                if (_resultProperty == value)
+                {
+                    return;
+                }
+
+                _resultProperty = value;
+                RaisePropertyChanged(() => Result);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Visible" /> property's name.
+        /// </summary>
+        public const string VisiblePropertyName = "Visible";
+
+        private System.Windows.Visibility _VisibleProperty = System.Windows.Visibility.Hidden;
+
+        /// <summary>
+        /// Sets and gets the SomeString property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public System.Windows.Visibility Visible
+        {
+            get
+            {
+                return _VisibleProperty;
+            }
+
+            set
+            {
+                if (_VisibleProperty == value)
+                {
+                    return;
+                }
+
+                _VisibleProperty = value;
+                RaisePropertyChanged(() => Visible);
+            }
+        }
+
         #endregion
 
         #region Fields
@@ -101,15 +164,6 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
                     WelcomeTitle = item.Title;
                 });
             
-            LoginView loginView = new LoginView();
-            if ((bool)loginView.ShowDialog())
-            {
-
-            }
-            else
-            {
-
-            }
             Initialize();
             
         }

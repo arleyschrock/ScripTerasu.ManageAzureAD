@@ -1,0 +1,34 @@
+﻿<Window x:Class="ScripTerasu.ManageAzureAD.ManageUsersView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        xmlns:WPFToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+        mc:Ignorable="d ignore"  Height="300" Width="500"
+        DataContext="{Binding ManageUser, Source={StaticResource Locator}}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="Nuevo" Margin="5"/>
+            <Button Content="Nuevo" Margin="5" Grid.Column="1"/>
+            <Button Content="Nuevo" Margin="5" Grid.Column="2"/>
+        </Grid>
+        
+        <WPFToolkit:DataGrid ItemsSource="{Binding ListMSolUser}" Margin="10" Grid.Row="1" >
+            <WPFToolkit:DataGrid.Columns>
+                <WPFToolkit:DataGridTextColumn Header="DisplayName" Binding="{Binding DisplayName}" FontSize="12" Foreground="DarkBlue" Width="Auto"/>
+            </WPFToolkit:DataGrid.Columns>
+        </WPFToolkit:DataGrid>
+
+    </Grid>
+</Window>

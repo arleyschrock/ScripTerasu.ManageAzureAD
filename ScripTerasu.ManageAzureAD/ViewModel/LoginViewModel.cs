@@ -1,15 +1,15 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using ScripTerasu.ManageAzureAD.Model;
+using GalaSoft.MvvmLight.Messaging;
 using ScripTerasu.ManageAzureAD.Framework;
 using ScripTerasu.ManageAzureAD.Framework.MSOnline;
+using ScripTerasu.ManageAzureAD.Helpers;
+using ScripTerasu.ManageAzureAD.Model;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
-using System.Security;
 using System.Windows;
-using System.Collections.ObjectModel;
-using ScripTerasu.ManageAzureAD.Helpers;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
 {
@@ -19,15 +19,17 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : ViewModelBase, ICloseable
     {
-        #region Property
+        private readonly IDataService _dataService;
+
+        #region Properties
         /// <summary>
         /// The <see cref="UserPrincipalName" /> property's name.
         /// </summary>
         public const string UserPrincipalNamePropertyName = "UserPrincipalName";
 
-        private string _UserPrincipalName;
+        private string _UserPrincipalNameProperty;
 
         /// <summary>
         /// Sets and gets the UserPrincipalName property.
@@ -37,18 +39,18 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         {
             get
             {
-                return _UserPrincipalName;
+                return _UserPrincipalNameProperty;
             }
 
             set
             {
-                if (_UserPrincipalName == value)
+                if (_UserPrincipalNameProperty == value)
                 {
                     return;
                 }
 
-                _UserPrincipalName = value;
-                RaisePropertyChanged(UserPrincipalNamePropertyName);
+                _UserPrincipalNameProperty = value;
+                RaisePropertyChanged(() => UserPrincipalName);
             }
         }
 
@@ -57,7 +59,7 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         /// </summary>
         public const string UserPasswordPropertyName = "UserPassword";
 
-        private string _UserPassword;
+        private string _UserPasswordProperty;
 
         /// <summary>
         /// Sets and gets the UserPassword property.
@@ -67,24 +69,115 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         {
             get
             {
-                return _UserPassword;
+                return _UserPasswordProperty;
             }
 
             set
             {
-                if (_UserPassword == value)
+                if (_UserPasswordProperty == value)
                 {
                     return;
                 }
 
-                _UserPassword = value;
-                RaisePropertyChanged(UserPasswordPropertyName);
+                _UserPasswordProperty = value;
+                RaisePropertyChanged(() => UserPassword);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Remember" /> property's name.
+        /// </summary>
+        public const string RememberPropertyName = "Remember";
+
+        private bool _RememberProperty = false;
+
+        /// <summary>
+        /// Sets and gets the Remember property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool Remember
+        {
+            get
+            {
+                return _RememberProperty;
+            }
+
+            set
+            {
+                if (_RememberProperty == value)
+                {
+                    return;
+                }
+
+                _RememberProperty = value;
+                RaisePropertyChanged(() => Remember);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Argument" /> property's name.
+        /// </summary>
+        public const string ArgumentPropertyName = "Argument";
+
+        private string _argumentProperty;
+
+        /// <summary>
+        /// Sets and gets the Argument property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string Argument
+        {
+            get
+            {
+                return _argumentProperty;
+            }
+
+            set
+            {
+                if (_argumentProperty == value)
+                {
+                    return;
+                }
+
+                _argumentProperty = value;
+                RaisePropertyChanged(() => Argument);
+            }
+        }
+
+
+        /// <summary>
+        /// The <see cref="CheckMe" /> property's name.
+        /// </summary>
+        public const string CheckMePropertyName = "CheckMe";
+
+        private bool _CheckMeProperty = false;
+
+        /// <summary>
+        /// Sets and gets the CheckMe property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool CheckMe
+        {
+            get
+            {
+                return _CheckMeProperty;
+            }
+
+            set
+            {
+                if (_CheckMeProperty == value)
+                {
+                    return;
+                }
+
+                _CheckMeProperty = value;
+                Messenger.Default.Send(_CheckMeProperty ? "Accepted" : "Rejected");
+                RaisePropertyChanged(() => CheckMe);
             }
         }
         #endregion
 
         #region Command
-
         private RelayCommand _cancelCommand;
 
         /// <summary>
@@ -101,6 +194,7 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
 
         private void ExecuteCancelCommand()
         {
+            //Messenger.Default.Send(false);
             Application.Current.Shutdown();
         }
 
@@ -114,40 +208,36 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
             get
             {
                 return _loginCommand
-                    ?? (_loginCommand = new RelayCommand(ExecuteLoginCommand));
+                    ?? (_loginCommand = new RelayCommand(
+                    () =>
+                    {
+                        ExecuteLoginCommand();
+                    }));
             }
         }
 
         private void ExecuteLoginCommand()
         {
-            // Verify user credentials are empty or not.
-            if (string.IsNullOrEmpty(this.UserPrincipalName) || string.IsNullOrEmpty(this.UserPassword))
+            // Verifique las credenciales del usuario están vacías o no.
+            if (!string.IsNullOrEmpty(this.UserPrincipalName) && !string.IsNullOrEmpty(this.UserPassword))
             {
-                return;
+                // Asignar nombre de usuario y clave para variable.
+                UserCredential.UserName = UserPrincipalName;
+                UserCredential.Password = StringExtensions.ToSecureString(UserPassword);
+
+                List<IMsolCmdlet> collCmdlets = new List<IMsolCmdlet>();
+                collCmdlets.Add(new GetMsolAccountSku());
+
+                Collection<PSObject> coll = Executor.Instance.ExcutePowershellCommandsMSOnline(collCmdlets);
+
+                if (coll != null)
+                    Messenger.Default.Send(true);
+                else
+                    Messenger.Default.Send(false);
             }
-
-            // Assign username to variable.
-            UserCredential.UserName = UserPrincipalName;
-            UserCredential.Password = StringExtensions.ToSecureString(UserPassword);
-
-            // Create Initial Session State for runspace.
-            InitialSessionState initialSession = InitialSessionState.CreateDefault();
-            initialSession.ImportPSModule(new[] { "MSOnline" });
-
-            List<IMsolCmdlet> collCmdlets = new List<IMsolCmdlet>();
-            
-            // Create credential object.
-            PSCredential credential = new PSCredential(UserCredential.UserName, UserCredential.Password);
-
-            collCmdlets.Add(new ConnectMsolService(){ Credential = credential});
-            collCmdlets.Add(new GetMsolUser() { UsageLocation = "CL"});
-
-            Collection<PSObject> coll = Executor.Instance.ExcutePowershellCommands(initialSession, collCmdlets);
-
+            return;
         }
         #endregion
-
-        private readonly IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the LoginViewModel class.
@@ -164,6 +254,7 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
                         return;
                     }
                 });
+            UserPrincipalName = "salmendra@tyschile.cl";
         }
 
     }

@@ -7,7 +7,7 @@
         mc:Ignorable="d ignore"
         Height="300"
         Width="500"
-        Title="MVVM Light Application" >
+        Title="MVVM Light Application">
     
     <Window.Resources>
         <ResourceDictionary>
