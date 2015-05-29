@@ -19,37 +19,65 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         #region Properties
 
         /// <summary>
-        /// The <see cref="ListMSolUser" /> property's name.
+        /// The <see cref="ListUser" /> property's name.
         /// </summary>
         public const string ListMSolUserPropertyName = "ListMSolUser";
 
-        private ObservableCollection<User> _ListMSolUser = new ObservableCollection<User>();
+        private ObservableCollection<User> _ListUser = new ObservableCollection<User>();
 
         /// <summary>
         /// Sets and gets the ListMSolUser property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public ObservableCollection<User> ListMSolUser
+        public ObservableCollection<User> ListUser
         {
             get
             {
-                return _ListMSolUser;
+                return _ListUser;
             }
 
             set
             {
-                if (_ListMSolUser == value)
+                if (_ListUser == value)
                 {
                     return;
                 }
 
-                _ListMSolUser = value;
+                _ListUser = value;
                 RaisePropertyChanged(ListMSolUserPropertyName);
             }
         }
 
-        #endregion
+        /// <summary>
+        /// The <see cref="UserSelected" /> property's name.
+        /// </summary>
+        public const string UserSelectedPropertyName = "UserSelected";
 
+        private User _UserSelected;
+
+        /// <summary>
+        /// Sets and gets the UserSelected property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public User UserSelected
+        {
+            get
+            {
+                return _UserSelected;
+            }
+
+            set
+            {
+                if (_UserSelected == value)
+                {
+                    return;
+                }
+
+                _UserSelected = value;
+                RaisePropertyChanged(() => UserSelected);
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the ManageMsolUserModel class.
@@ -61,9 +89,13 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
 
             Collection<PSObject> coll = Executor.Instance.ExcutePowershellCommandsMSOnline(collCmdlets);
 
-            foreach (PSObject item in coll)
+            if (coll != null)
             {
-                ListMSolUser.Add((User)item.BaseObject);
+
+                foreach (PSObject item in coll)
+                {
+                    ListUser.Add((User)item.BaseObject);
+                }
             }
         }
     }

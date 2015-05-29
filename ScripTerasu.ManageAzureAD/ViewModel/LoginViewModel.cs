@@ -5,10 +5,12 @@ using ScripTerasu.ManageAzureAD.Framework;
 using ScripTerasu.ManageAzureAD.Framework.MSOnline;
 using ScripTerasu.ManageAzureAD.Helpers;
 using ScripTerasu.ManageAzureAD.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
-using System.Management.Automation.Runspaces;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
@@ -19,7 +21,7 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class LoginViewModel : ViewModelBase, ICloseable
+    public class LoginViewModel : ViewModelBase
     {
         private readonly IDataService _dataService;
 
@@ -225,6 +227,8 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
                 UserCredential.UserName = UserPrincipalName;
                 UserCredential.Password = StringExtensions.ToSecureString(UserPassword);
 
+                SavePropertiesSettings();
+
                 List<IMsolCmdlet> collCmdlets = new List<IMsolCmdlet>();
                 collCmdlets.Add(new GetMsolAccountSku());
 
@@ -237,6 +241,7 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
             }
             return;
         }
+
         #endregion
 
         /// <summary>
@@ -254,8 +259,35 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
                         return;
                     }
                 });
-            UserPrincipalName = "salmendra@tyschile.cl";
+
+            Remember = Properties.Settings.Default.UserCredentialRemember;
+            UserPrincipalName = Properties.Settings.Default.UserCredentialUserName;
+            string pass = Properties.Settings.Default.UserCredentialUserNamePassword;
+            if(!string.IsNullOrEmpty(pass))
+            {
+                byte[] passwordBytes = Encoding.ASCII.GetBytes(KeyVector);
+                UserPassword = AES.Decrypt(pass, passwordBytes);
+            }
         }
 
+        private void SavePropertiesSettings()
+        {
+            Properties.Settings.Default.UserCredentialRemember = Remember;
+            Properties.Settings.Default.UserCredentialUserName = string.Empty;
+            Properties.Settings.Default.UserCredentialUserNamePassword = string.Empty;
+
+            if (Remember)
+            {
+                Properties.Settings.Default.UserCredentialUserName = UserPrincipalName;
+
+                if (!string.IsNullOrEmpty(UserPassword))
+                {
+                    byte[] passwordBytes = Encoding.ASCII.GetBytes(KeyVector);
+                    Properties.Settings.Default.UserCredentialUserNamePassword = AES.Encrypt(UserPassword, passwordBytes);
+                }
+            }
+            Properties.Settings.Default.Save();
+        }
+        private string KeyVector = "iQVu2tdc5fOnDwNQKmebLVhV5MpY5cKH";
     }
 }

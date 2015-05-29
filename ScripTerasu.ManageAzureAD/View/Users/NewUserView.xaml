@@ -1,0 +1,43 @@
+﻿<Window x:Class="ScripTerasu.ManageAzureAD.View.Users.NewUserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding ViewModelName, Source={StaticResource Locator}}" Width="570" Height="650">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Label Content="Crear una nueva cuenta de usuario" Margin="5" FontWeight="Bold" FontSize="16" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Content="Nombre" Margin="5"/>
+            <TextBox Grid.Row="1" Margin="5"/>
+            <Label Content="Apellidos" Grid.Column="2" Margin="5"/>
+            <TextBox Grid.Row="1" Grid.Column="3" Margin="5"/>
+        </Grid>
+        <Label Content="Nombre para mostrar" Grid.Row="2" Margin="5"/>
+        <TextBox Grid.Row="3" Margin="5"/>
+        <CheckBox Content=" Solicitar que este usuario cambie su contraseña en el próximo inicio de sesión. " IsChecked="True" Grid.Row="4" />
+        
+    </Grid>
+</Window>

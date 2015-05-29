@@ -6,29 +6,48 @@
         xmlns:ignore="http://www.ignore.com"
         xmlns:WPFToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
         mc:Ignorable="d ignore"  Height="300" Width="500"
-        DataContext="{Binding ManageUser, Source={StaticResource Locator}}">
-
-    <Grid>
+        DataContext="{Binding ManageUser, Source={StaticResource Locator}}" Icon="Image/Icon.ico">
+    <Grid Margin="5,0,5,5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="5" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
-            <Button Content="Nuevo" Margin="5"/>
-            <Button Content="Nuevo" Margin="5" Grid.Column="1"/>
-            <Button Content="Nuevo" Margin="5" Grid.Column="2"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="1" />
+            </Grid.RowDefinitions>
+            <Button>
+                <StackPanel>
+                    <Image Source="Image/User/Plus.png" Width="25" >
+                    </Image>
+                    <TextBlock Text="Add User" />
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="2" >
+                <StackPanel>
+                    <Image Source="Image/User/Settings.png" Width="25" >
+                    </Image>
+                    <TextBlock Text="Properties" />
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="4" >
+                <StackPanel>
+                    <Image Source="Image/User/Cancel.png" Width="25" >
+                    </Image>
+                    <TextBlock Text="Delete" />
+                </StackPanel>
+            </Button>
         </Grid>
-        
-        <WPFToolkit:DataGrid ItemsSource="{Binding ListMSolUser}" Margin="10" Grid.Row="1" >
-            <WPFToolkit:DataGrid.Columns>
-                <WPFToolkit:DataGridTextColumn Header="DisplayName" Binding="{Binding DisplayName}" FontSize="12" Foreground="DarkBlue" Width="Auto"/>
-            </WPFToolkit:DataGrid.Columns>
+        <WPFToolkit:DataGrid ItemsSource="{Binding ListUser}" SelectedItem="{Binding UserSelected}" Grid.Row="2" IsReadOnly="True" SelectionMode="Single" >
         </WPFToolkit:DataGrid>
-
     </Grid>
 </Window>

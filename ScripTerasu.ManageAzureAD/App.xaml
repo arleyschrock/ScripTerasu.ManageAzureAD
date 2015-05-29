@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:ScripTerasu.ManageAzureAD.ViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:properties="clr-namespace:ScripTerasu.ManageAzureAD.Properties"
              Startup="Application_Startup"
              mc:Ignorable="d">
     
@@ -11,6 +12,7 @@
         <!--Global View Model Locator-->
         <vm:ViewModelLocator x:Key="Locator"
                              d:IsDataSource="True" />
+        <properties:Settings x:Key="Settings" />
     </Application.Resources>
     
 </Application>

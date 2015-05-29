@@ -8,7 +8,7 @@
         mc:Ignorable="d ignore"  Height="300" Width="450"
         WindowStartupLocation="CenterScreen" 
         MinWidth="450" MinHeight="300" MaxWidth="450" MaxHeight="300" 
-        ResizeMode="NoResize" Title="Inicie sesión" Icon="Icon.ico">
+        ResizeMode="NoResize" Title="Inicie sesión" Icon="Image/Icon.ico">
 
     <Window.InputBindings>
         <KeyBinding Command="{Binding LoginCommand}"

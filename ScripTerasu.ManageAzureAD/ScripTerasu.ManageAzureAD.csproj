@@ -61,7 +61,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Image\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -130,6 +130,7 @@
     <Compile Include="Framework\MSOnline\RemoveMsolUser.cs" />
     <Compile Include="Framework\MSOnline\RestoreMsolUser.cs" />
     <Compile Include="Framework\MSOnline\SetMsolUser.cs" />
+    <Compile Include="Helpers\AES.cs" />
     <Compile Include="Helpers\OpenWindowMessage.cs" />
     <Compile Include="Helpers\TypeExtension.cs" />
     <Compile Include="Helpers\PasswordBoxAssistant.cs" />
@@ -146,17 +147,20 @@
     <Compile Include="Framework\MSOnline\GetMsolUser.cs" />
     <Compile Include="Framework\MSOnline\UserCredential.cs" />
     <Compile Include="Model\MsolUser.cs" />
-    <Compile Include="ViewModel\ICloseable.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ManageUsersViewModel.cs" />
+    <Compile Include="ViewModel\UsersViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManageUsersView.xaml.cs">
       <DependentUpon>ManageUsersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Users\NewUserView.xaml.cs">
+      <DependentUpon>NewUserView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -182,6 +186,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Users\NewUserView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -201,6 +209,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -227,10 +236,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon.ico" />
+    <Resource Include="Image\Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\ajax-loader.gif" />
+    <Resource Include="Image\User\Cancel.png" />
+    <Resource Include="Image\User\Plus.png" />
+    <Resource Include="Image\User\Settings.png" />
+    <Resource Include="Image\User\Sinchronize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\Users\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
