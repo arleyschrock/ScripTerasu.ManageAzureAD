@@ -1,17 +1,23 @@
-﻿using GalaSoft.MvvmLight;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using ScripTerasu.ManageAzureAD.Framework;
 using ScripTerasu.ManageAzureAD.Framework.MSOnline;
+using ScripTerasu.ManageAzureAD.Framework.MSOnline.Administration.Automation;
 using ScripTerasu.ManageAzureAD.Helpers;
 using ScripTerasu.ManageAzureAD.Model;
-using System;
+using ScripTerasu.ManageAzureAD.Properties;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Management.Automation;
-using System.Runtime.InteropServices;
+using System.Management.Automation.Runspaces;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
 {
@@ -23,16 +29,39 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
     /// </summary>
     public class LoginViewModel : ViewModelBase
     {
-        private readonly IDataService _dataService;
+        private readonly CredentialItem _CredentialItem;
+
+        #region Fields
+        private const string KeyVector = "iQVu2tdc5fOnDwNQKmebLVhV5MpY5cKH";
+
+        /// <summary>
+        /// The <see cref="Remember" /> property's name.
+        /// </summary>
+        public const string RememberPropertyName = "Remember";
+
+        private bool _RememberProperty = false;
+
+        /// <summary>
+        /// The <see cref="Argument" /> property's name.
+        /// </summary>
+        public const string ArgumentPropertyName = "Argument";
+
+        private string _argumentProperty;
+
+        /// <summary>
+        /// The <see cref="CheckMe" /> property's name.
+        /// </summary>
+        public const string CheckMePropertyName = "CheckMe";
+
+        private bool _CheckMeProperty = false;
+
+        private RelayCommand _cancelCommand;
+
+        private RelayCommand _loginCommand;
+
+        #endregion
 
         #region Properties
-        /// <summary>
-        /// The <see cref="UserPrincipalName" /> property's name.
-        /// </summary>
-        public const string UserPrincipalNamePropertyName = "UserPrincipalName";
-
-        private string _UserPrincipalNameProperty;
-
         /// <summary>
         /// Sets and gets the UserPrincipalName property.
         /// Changes to that property's value raise the PropertyChanged event. 
@@ -41,27 +70,20 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         {
             get
             {
-                return _UserPrincipalNameProperty;
+                return _CredentialItem.UserName;
             }
 
             set
             {
-                if (_UserPrincipalNameProperty == value)
+                if (_CredentialItem.UserName == value)
                 {
                     return;
                 }
 
-                _UserPrincipalNameProperty = value;
+                _CredentialItem.UserName = value;
                 RaisePropertyChanged(() => UserPrincipalName);
             }
         }
-
-        /// <summary>
-        /// The <see cref="UserPassword" /> property's name.
-        /// </summary>
-        public const string UserPasswordPropertyName = "UserPassword";
-
-        private string _UserPasswordProperty;
 
         /// <summary>
         /// Sets and gets the UserPassword property.
@@ -71,27 +93,20 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         {
             get
             {
-                return _UserPasswordProperty;
+                return _CredentialItem.Password;
             }
 
             set
             {
-                if (_UserPasswordProperty == value)
+                if (_CredentialItem.Password == value)
                 {
                     return;
                 }
 
-                _UserPasswordProperty = value;
+                _CredentialItem.Password = value;
                 RaisePropertyChanged(() => UserPassword);
             }
         }
-
-        /// <summary>
-        /// The <see cref="Remember" /> property's name.
-        /// </summary>
-        public const string RememberPropertyName = "Remember";
-
-        private bool _RememberProperty = false;
 
         /// <summary>
         /// Sets and gets the Remember property.
@@ -117,13 +132,6 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="Argument" /> property's name.
-        /// </summary>
-        public const string ArgumentPropertyName = "Argument";
-
-        private string _argumentProperty;
-
-        /// <summary>
         /// Sets and gets the Argument property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
@@ -145,14 +153,6 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
                 RaisePropertyChanged(() => Argument);
             }
         }
-
-
-        /// <summary>
-        /// The <see cref="CheckMe" /> property's name.
-        /// </summary>
-        public const string CheckMePropertyName = "CheckMe";
-
-        private bool _CheckMeProperty = false;
 
         /// <summary>
         /// Sets and gets the CheckMe property.
@@ -180,7 +180,53 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
         #endregion
 
         #region Command
-        private RelayCommand _cancelCommand;
+
+        /// <summary>
+        /// Gets the LoginCommand.
+        /// </summary>
+        public RelayCommand LoginCommand
+        {
+            get
+            {
+                return _loginCommand ?? (_loginCommand = new RelayCommand(
+                    ExecuteLoginCommand,
+                    CanExecuteLoginCommand));
+            }
+        }
+
+        private void ExecuteLoginCommand()
+        {
+            if (!LoginCommand.CanExecute(null))
+            {
+                return;
+            }
+            // Verifique las credenciales del usuario están vacías o no.
+            if (!string.IsNullOrEmpty(this.UserPrincipalName) && !string.IsNullOrEmpty(this.UserPassword))
+            {
+                // Asignar nombre de usuario y clave para variable.
+                UserCredential.UserName = UserPrincipalName;
+                UserCredential.Password = StringExtensions.ToSecureString(UserPassword);
+
+                SavePropertiesSettings();
+
+                MsolCmdletWrapper.Instance.Connect();
+
+                if (MsolCmdletWrapper.Instance.IsConnect)
+                {
+                    Messenger.Default.Send(true);
+                }
+                else
+                {
+                    UserPassword = string.Empty;
+                    MessageBox.Show(Messages.BadMemberNameOrPassword);
+                }
+            }
+        }
+
+        private bool CanExecuteLoginCommand()
+        {
+            return _CredentialItem.IsValid;
+        }
 
         /// <summary>
         /// Gets the CancelCommand.
@@ -196,78 +242,29 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
 
         private void ExecuteCancelCommand()
         {
-            //Messenger.Default.Send(false);
             Application.Current.Shutdown();
         }
-
-        private RelayCommand _loginCommand;
-
-        /// <summary>
-        /// Gets the LoginCommand.
-        /// </summary>
-        public RelayCommand LoginCommand
-        {
-            get
-            {
-                return _loginCommand
-                    ?? (_loginCommand = new RelayCommand(
-                    () =>
-                    {
-                        ExecuteLoginCommand();
-                    }));
-            }
-        }
-
-        private void ExecuteLoginCommand()
-        {
-            // Verifique las credenciales del usuario están vacías o no.
-            if (!string.IsNullOrEmpty(this.UserPrincipalName) && !string.IsNullOrEmpty(this.UserPassword))
-            {
-                // Asignar nombre de usuario y clave para variable.
-                UserCredential.UserName = UserPrincipalName;
-                UserCredential.Password = StringExtensions.ToSecureString(UserPassword);
-
-                SavePropertiesSettings();
-
-                List<IMsolCmdlet> collCmdlets = new List<IMsolCmdlet>();
-                collCmdlets.Add(new GetMsolAccountSku());
-
-                Collection<PSObject> coll = Executor.Instance.ExcutePowershellCommandsMSOnline(collCmdlets);
-
-                if (coll != null)
-                    Messenger.Default.Send(true);
-                else
-                    Messenger.Default.Send(false);
-            }
-            return;
-        }
-
         #endregion
 
         /// <summary>
         /// Initializes a new instance of the LoginViewModel class.
         /// </summary>
-        public LoginViewModel(IDataService dataService)
+        public LoginViewModel(ValidatorFactory validator)
         {
-            _dataService = dataService;
-            _dataService.GetData(
-                (item, error) =>
-                {
-                    if (error != null)
-                    {
-                        // Report error here
-                        return;
-                    }
-                });
+            _CredentialItem = new CredentialItem();
 
             Remember = Properties.Settings.Default.UserCredentialRemember;
+
             UserPrincipalName = Properties.Settings.Default.UserCredentialUserName;
+
             string pass = Properties.Settings.Default.UserCredentialUserNamePassword;
-            if(!string.IsNullOrEmpty(pass))
+            if (!string.IsNullOrEmpty(pass))
             {
                 byte[] passwordBytes = Encoding.ASCII.GetBytes(KeyVector);
                 UserPassword = AES.Decrypt(pass, passwordBytes);
             }
+
+            _CredentialItem.Validator = validator.GetValidator<CredentialItem>();
         }
 
         private void SavePropertiesSettings()
@@ -288,6 +285,5 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
             }
             Properties.Settings.Default.Save();
         }
-        private string KeyVector = "iQVu2tdc5fOnDwNQKmebLVhV5MpY5cKH";
     }
 }

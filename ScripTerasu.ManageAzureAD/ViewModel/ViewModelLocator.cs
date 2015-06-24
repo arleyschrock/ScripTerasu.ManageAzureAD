@@ -9,11 +9,14 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using FluentValidation;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using ScripTerasu.ManageAzureAD.Helpers;
 using ScripTerasu.ManageAzureAD.Model;
+using ScripTerasu.ManageAzureAD.View;
+using ScripTerasu.ManageAzureAD.ViewModel.Users;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel
 {
@@ -69,6 +72,35 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
                 return ServiceLocator.Current.GetInstance<ManageUsersViewModel>();
             }
         }
+
+
+        /// <summary>
+        /// Gets the ViewModelPropertyName property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public NewUserViewModel NewUser
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<NewUserViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the ViewModelPropertyName property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public UserPropertiesViewModel UserProperties
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UserPropertiesViewModel>();
+            }
+        }
         #endregion
 
         static ViewModelLocator()
@@ -84,9 +116,13 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
+            SimpleIoc.Default.Register<ValidatorFactory>(true);
+
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<ManageUsersViewModel>();
+            SimpleIoc.Default.Register<NewUserViewModel>();
+            SimpleIoc.Default.Register<UserPropertiesViewModel>();
         }
 
         //No Code Behind

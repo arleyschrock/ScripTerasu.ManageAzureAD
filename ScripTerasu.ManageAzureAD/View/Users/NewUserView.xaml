@@ -5,39 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        DataContext="{Binding ViewModelName, Source={StaticResource Locator}}" Width="570" Height="650">
-
+        Width="570" Height="650" Icon="/ScripTerasu.ManageAzureAD;component/Image/Icon.ico"
+        DataContext="{Binding NewUser, Source={StaticResource Locator}}" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="80" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <Label Content="Crear una nueva cuenta de usuario" Margin="5" FontWeight="Bold" FontSize="16" />
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="0*"/>
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Label Content="Nombre" Margin="5"/>
-            <TextBox Grid.Row="1" Margin="5"/>
-            <Label Content="Apellidos" Grid.Column="2" Margin="5"/>
-            <TextBox Grid.Row="1" Grid.Column="3" Margin="5"/>
-        </Grid>
-        <Label Content="Nombre para mostrar" Grid.Row="2" Margin="5"/>
-        <TextBox Grid.Row="3" Margin="5"/>
-        <CheckBox Content=" Solicitar que este usuario cambie su contraseña en el próximo inicio de sesión. " IsChecked="True" Grid.Row="4" />
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Crear una nueva cuenta de usuario" Grid.ColumnSpan="2" Margin="5" FontWeight="Bold" FontSize="16"/>
+        <GroupBox Grid.ColumnSpan="2" Grid.Row="1" Margin="5">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="35" />
+                            <RowDefinition Height="35" />
+                            <RowDefinition Height="35" />
+                            <RowDefinition Height="35" />
+                            <RowDefinition Height="35" />
+                            <RowDefinition Height="35" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Label Content="Nombre" Margin="5,1"/>
+                            <TextBox Text="{Binding FirstName}" Grid.Row="1" Margin="5"/>
+                            <Label Content="Apellidos" Grid.Column="2" Margin="5,1"/>
+                            <TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="2" Margin="5"/>
+                        </Grid>
+                        <Label Content="Nombre para mostrar *" Grid.Row="1" Margin="5,1"/>
+                        <TextBox Text="{Binding DisplayName}" Grid.Row="2" Margin="5"/>
+                        <Label Content="Nombre de usuario *" Grid.Row="3" Margin="5,1" />
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="25" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding UserName}" Margin="5"/>
+                            <Label Content="@" Grid.Column="1" />
+                            <ComboBox ItemsSource="{Binding DomainSource}" SelectedItem="{Binding DomainSelected}" Margin="5" Grid.Column="2"/>
+                        </Grid>
+                        <CheckBox IsChecked="{Binding ForceChangePassword}" Content="Solicitar que este usuario cambie su contraseña en el próximo inicio de sesión." Grid.Row="6" />
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+        <Button Command="{Binding CreateCommand}" Content="Crear" IsDefault="True" Margin="5" Grid.Row="2" />
+        <Button Content="Cancelar" IsCancel="True" Margin="5" Grid.Column="1" Grid.Row="2"/>
     </Grid>
 </Window>

@@ -1,7 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using ScripTerasu.ManageAzureAD.Helpers;
+using ScripTerasu.ManageAzureAD.View;
+using ScripTerasu.ManageAzureAD.View.Users;
 using ScripTerasu.ManageAzureAD.ViewModel;
+using ScripTerasu.ManageAzureAD.ViewModel.Users;
 using System.Windows;
 
 namespace ScripTerasu.ManageAzureAD
@@ -47,8 +50,6 @@ namespace ScripTerasu.ManageAzureAD
 	            } 
                 
                 manageUsers.Show();
-            }else{
-                MessageBox.Show("Credenciales Incorrectas");
             }
         }
     }

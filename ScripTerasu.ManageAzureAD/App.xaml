@@ -7,12 +7,10 @@
              xmlns:properties="clr-namespace:ScripTerasu.ManageAzureAD.Properties"
              Startup="Application_Startup"
              mc:Ignorable="d">
-    
     <Application.Resources>
         <!--Global View Model Locator-->
         <vm:ViewModelLocator x:Key="Locator"
                              d:IsDataSource="True" />
         <properties:Settings x:Key="Settings" />
     </Application.Resources>
-    
 </Application>

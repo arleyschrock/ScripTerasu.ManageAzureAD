@@ -1,0 +1,117 @@
+﻿<Window x:Class="ScripTerasu.ManageAzureAD.View.Users.UserPropertiesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        DataContext="{Binding UserProperties, Source={StaticResource Locator}}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <TabControl Margin="10" Grid.Row="1" >
+            <TabItem Header="Detalles">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Nombre" />
+                    <TextBox Grid.Row="1" />
+                    <Label Content="Apellidos" Grid.Row="2" />
+                    <TextBox Grid.Row="3" />
+                    <Label Content="* Nombre para mostrar" Grid.Row="4" />
+                    <TextBox Grid.Row="5" />
+                    <Label Content="* Nombre de usuario" Grid.Row="6" />
+                    <TextBox Grid.Row="7" />
+                    <Expander Header="Detalles adicionales" Grid.Row="8" >
+                        <Expander.Content>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="Puesto" />
+                                    <TextBox Grid.Row="1" />
+                                    <Label Content="Departamento" Grid.Row="2" />
+                                    <TextBox Grid.Row="3" />
+                                    <Label Content="Oficina" Grid.Row="4" />
+                                    <TextBox Grid.Row="5" />
+                                    <Label Content="Teléfono de la oficina" Grid.Row="6" />
+                                    <TextBox Grid.Row="7" />
+                                    <Label Content="Teléfono móvil" Grid.Row="8" />
+                                    <TextBox Grid.Row="9" />
+                                    <Label Content="Número de fax" Grid.Row="10" />
+                                    <TextBox Grid.Row="11" />
+                                    <Label Content="Dirección" Grid.Row="12" />
+                                    <TextBox Grid.Row="13" />
+                                    <Label Content="Código postal" Grid.Row="14" />
+                                    <TextBox Grid.Row="15" />
+                                    <Label Content="Ciudad" Grid.Row="16" />
+                                    <TextBox Grid.Row="17" />
+                                    <Label Content="Estado o provincia" Grid.Row="18" />
+                                    <TextBox Grid.Row="19" />
+                                    <Label Content="País o región" Grid.Row="20" />
+                                    <TextBox Grid.Row="21" />
+                                </Grid>
+                            </ScrollViewer>
+                        </Expander.Content>
+                    </Expander>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Roles">
+                <Grid Background="#FFE5E5E5">
+                    
+                </Grid>
+            </TabItem>
+            <TabItem Header="Configuración" Margin="3,0,-7,-2">
+                <Grid Background="#FFE5E5E5">
+                </Grid>
+            </TabItem>
+            <TabItem Header="Licencias">
+                <Grid Background="#FFE5E5E5">
+                </Grid>
+            </TabItem>
+            <TabItem Header="Dirección de correo electrónico">
+                <Grid Background="#FFE5E5E5">
+                </Grid>
+            </TabItem>
+            <TabItem Header="Permisos del buzón">
+                <Grid Background="#FFE5E5E5">
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Grid.Row="2" />
+    </Grid>
+</Window>
