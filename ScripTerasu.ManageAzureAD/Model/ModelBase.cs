@@ -17,6 +17,7 @@ namespace ScripTerasu.ManageAzureAD.Model
             get { return _Validator; }
             set { _Validator = value; }
         }
+
         public bool IsValid
         {
             get

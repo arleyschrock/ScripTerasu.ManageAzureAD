@@ -12,8 +12,6 @@ namespace ScripTerasu.ManageAzureAD.Model
     {
         public ValidatorFactory()
         {
-            //register the Validators
-            SimpleIoc.Default.Register<IValidator<CredentialItem>, CredentialValidator>();
         }
 
         public override IValidator CreateInstance(Type validatorType)

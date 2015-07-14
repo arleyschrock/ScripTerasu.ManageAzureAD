@@ -5,8 +5,7 @@ using System.Xml;
 
 namespace ScripTerasu.ManageAzureAD.Framework.MSOnline.Administration
 {
-    //[DataContract(Name = "User")]
-    [DataContract(Name = "User", Namespace = "http://schemas.datacontract.org/2004/07/Microsoft.Online.Administration")]
+    [DataContract(Name = "User")]
     [KnownType(typeof(UserExtended))]
     public class User : IExtensibleDataObject
     {

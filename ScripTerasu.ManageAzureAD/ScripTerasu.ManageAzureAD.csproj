@@ -129,7 +129,6 @@
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="Helpers\AES.cs" />
     <Compile Include="Helpers\MsolCmdletWrapper.cs" />
-    <Compile Include="Helpers\Executor.cs" />
     <Compile Include="Helpers\MsolCmdletExtensions.cs" />
     <Compile Include="Helpers\OpenWindowMessage.cs" />
     <Compile Include="Helpers\TypeExtension.cs" />
@@ -137,7 +136,9 @@
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\UserCredential.cs" />
     <Compile Include="Helpers\WindowType.cs" />
+    <Compile Include="Model\MessengerToken.cs" />
     <Compile Include="Model\UserItem.cs" />
+    <Compile Include="Model\UserValidator.cs" />
     <Compile Include="Properties\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

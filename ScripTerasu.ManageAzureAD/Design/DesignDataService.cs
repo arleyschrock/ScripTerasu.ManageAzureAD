@@ -1,5 +1,5 @@
-﻿ using System;
-using ScripTerasu.ManageAzureAD.Model;
+﻿using ScripTerasu.ManageAzureAD.Model;
+using System;
 
 namespace ScripTerasu.ManageAzureAD.Design
 {

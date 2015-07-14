@@ -272,7 +272,7 @@ namespace ScripTerasu.ManageAzureAD.ViewModel.Users
             //    };
             //collCmdlets.Add(newMsolUser);
 
-            Collection<PSObject> coll = Executor.Instance.ExcutePowershellCommandsMSOnline(collCmdlets);
+            //Collection<PSObject> coll = Executor.Instance.ExcutePowershellCommandsMSOnline(collCmdlets);
         }
 
         private bool CanExecuteCreateCommand()

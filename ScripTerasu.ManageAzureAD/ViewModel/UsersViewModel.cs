@@ -10,8 +10,6 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
     /// </summary>
     public class UsersViewModel : ViewModelBase
     {
-
-
         /// <summary>
         /// Initializes a new instance of the UsersViewModel class.
         /// </summary>

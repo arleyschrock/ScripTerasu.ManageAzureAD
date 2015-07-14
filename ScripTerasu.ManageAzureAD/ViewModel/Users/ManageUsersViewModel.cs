@@ -14,6 +14,7 @@ using System.Management.Automation.Runspaces;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Runtime.Serialization;
+using ScripTerasu.ManageAzureAD.Model;
 
 namespace ScripTerasu.ManageAzureAD.ViewModel.Users
 {
@@ -130,6 +131,12 @@ namespace ScripTerasu.ManageAzureAD.ViewModel.Users
             {
                 return;
             }
+            MessengerInstance.Send(UserSelected, MessengerToken.BrushChanged); //, userPropertiesView.us..BrushChanged);
+
+            UserPropertiesView userPropertiesView = new UserPropertiesView();
+            
+           
+            //userPropertiesView.Show();
             
         }
 

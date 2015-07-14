@@ -117,6 +117,8 @@ namespace ScripTerasu.ManageAzureAD.ViewModel
             }
 
             SimpleIoc.Default.Register<ValidatorFactory>(true);
+            SimpleIoc.Default.Register<IValidator<CredentialItem>, CredentialValidator>();
+            SimpleIoc.Default.Register<IValidator<UserItem>, UserValidator>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();

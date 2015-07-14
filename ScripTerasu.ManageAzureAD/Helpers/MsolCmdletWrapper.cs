@@ -8,18 +8,19 @@ using System.Management.Automation.Runspaces;
 namespace ScripTerasu.ManageAzureAD.Helpers
 {
 
-    // Thank http://knicksmith.blogspot.com/2007/03/managing-exchange-2007-recipients-with.htm
+    // Thank Nick’s Exchange and Scripting Blog 
+    // http://knicksmith.blogspot.com/2007/03/managing-exchange-2007-recipients-with.htm
     public sealed class MsolCmdletWrapper
     {
         #region Variable Declaration
 
-        private InitialSessionState _initialSessionState;                           //InitialSessionState
-        private Runspace _runspace;                                                 //Runspace
-        private RunspaceInvoke _runspaceInvoke;                                     //RunspaceInvoke
+        private InitialSessionState _initialSessionState;
+        private Runspace _runspace;
+        private RunspaceInvoke _runspaceInvoke;
         private ConnectMsolService _connectMsolService;
 
         private static readonly MsolCmdletWrapper instance =
-            new MsolCmdletWrapper();                                   //Singleton instance
+            new MsolCmdletWrapper();
 
 
         #endregion
@@ -31,7 +32,6 @@ namespace ScripTerasu.ManageAzureAD.Helpers
         public bool IsConnect
         {
             get { return _isConnect; }
-            //set { _isConnect = value; }
         }
         
 
@@ -318,6 +318,12 @@ namespace ScripTerasu.ManageAzureAD.Helpers
             _runspaceInvoke = null;
 
             _runspace = null;
+
+            _isConnect = false;
+
+            _initialSessionState = null;
+
+            _connectMsolService = null;
         }
 
     }
